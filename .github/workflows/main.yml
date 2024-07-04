@@ -1,0 +1,131 @@
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+
+def create_flashcards(pdf_path, flashcards, font_path):
+    c = canvas.Canvas(pdf_path, pagesize=letter)
+    width, height = letter
+
+    # Register Japanese font
+    pdfmetrics.registerFont(TTFont('NotoSansCJKjp', font_path))
+    c.setFont('NotoSansCJKjp', 16)
+
+    for front, back in flashcards:
+        # Add front of the flashcard
+        c.drawCentredString(width / 2, height / 2, front)
+        c.showPage()
+
+        # Add back of the flashcard
+        c.drawCentredString(width / 2, height / 2, back)
+        c.showPage()
+
+    c.save()
+
+# List of flashcards (front, back) - limiting to 100 words
+flashcards = [
+    ("行く (いく, iku)", "가다"),
+    ("食べる (たべる, taberu)", "먹다"),
+    ("学ぶ (まなぶ, manabu)", "배우다"),
+    ("浮かぶ (うかぶ, ukabu)", "떠오르다"),
+    ("受ける (うける, ukeru)", "받다"),
+    ("計画する (けいかくする, keikaku suru)", "계획하다"),
+    ("学校 (がっこう, gakkou)", "학교"),
+    ("友達 (ともだち, tomodachi)", "친구"),
+    ("家族 (かぞく, kazoku)", "가족"),
+    ("明るい (あかるい, akarui)", "밝은"),
+    ("暗い (くらい, kurai)", "어두운"),
+    ("新しい (あたらしい, atarashii)", "새로운"),
+    ("古い (ふるい, furui)", "오래된"),
+    ("強い (つよい, tsuyoi)", "강한"),
+    ("弱い (よわい, yowai)", "약한"),
+    ("良い (よい, yoi)", "좋은"),
+    ("悪い (わるい, warui)", "나쁜"),
+    ("うまい (umai)", "맛있는"),
+    ("まずい (mazui)", "맛없는"),
+    ("辛い (からい, karai)", "매운"),
+    ("甘い (あまい, amai)", "단"),
+    ("酸っぱい (すっぱい, suppai)", "신"),
+    ("苦い (にがい, nigai)", "쓴"),
+    ("塩辛い (しおからい, shiokarai)", "짠"),
+    ("面白い (おもしろい, omoshiroi)", "재미있는"),
+    ("つまらない (tsumaranai)", "재미없는"),
+    ("優しい (やさしい, yasashii)", "친절한"),
+    ("厳しい (きびしい, kibishii)", "엄격한"),
+    ("暖かい (あたたかい, atatakai)", "따뜻한"),
+    ("涼しい (すずしい, suzushii)", "시원한"),
+    ("悲しい (かなしい, kanashii)", "슬픈"),
+    ("嬉しい (うれしい, ureshii)", "기쁜"),
+    ("計算する (けいさんする, keisan suru)", "계산하다"),
+    ("運動する (うんどうする, undou suru)", "운동하다"),
+    ("話す (はなす, hanasu)", "말하다"),
+    ("読む (よむ, yomu)", "읽다"),
+    ("書く (かく, kaku)", "쓰다"),
+    ("聞く (きく, kiku)", "듣다"),
+    ("見る (みる, miru)", "보다"),
+    ("起きる (おきる, okiru)", "일어나다"),
+    ("寝る (ねる, neru)", "자다"),
+    ("歩く (あるく, aruku)", "걷다"),
+    ("走る (はしる, hashiru)", "달리다"),
+    ("泳ぐ (およぐ, oyogu)", "수영하다"),
+    ("立つ (たつ, tatsu)", "서다"),
+    ("座る (すわる, suwaru)", "앉다"),
+    ("入る (はいる, hairu)", "들어가다"),
+    ("出る (でる, deru)", "나오다"),
+    ("買う (かう, kau)", "사다"),
+    ("売る (うる, uru)", "팔다"),
+    ("作る (つくる, tsukuru)", "만들다"),
+    ("使う (つかう, tsukau)", "사용하다"),
+    ("始める (はじめる, hajimeru)", "시작하다"),
+    ("終わる (おわる, owaru)", "끝나다"),
+    ("持つ (もつ, motsu)", "가지다"),
+    ("取る (とる, toru)", "잡다"),
+    ("助ける (たすける, tasukeru)", "돕다"),
+    ("教える (おしえる, oshieru)", "가르치다"),
+    ("学ぶ (まなぶ, manabu)", "배우다"),
+    ("考える (かんがえる, kangaeru)", "생각하다"),
+    ("知る (しる, shiru)", "알다"),
+    ("会う (あう, au)", "만나다"),
+    ("住む (すむ, sumu)", "살다"),
+    ("働く (はたらく, hataraku)", "일하다"),
+    ("遊ぶ (あそぶ, asobu)", "놀다"),
+    ("食べる (たべる, taberu)", "먹다"),
+    ("飲む (のむ, nomu)", "마시다"),
+    ("書く (かく, kaku)", "쓰다"),
+    ("聞く (きく, kiku)", "듣다"),
+    ("見る (みる, miru)", "보다"),
+    ("来る (くる, kuru)", "오다"),
+    ("帰る (かえる, kaeru)", "돌아가다"),
+    ("入れる (いれる, ireru)", "넣다"),
+    ("出す (だす, dasu)", "꺼내다"),
+    ("笑う (わらう, warau)", "웃다"),
+    ("泣く (なく, naku)", "울다"),
+    ("怒る (おこる, okoru)", "화내다"),
+    ("喜ぶ (よろこぶ, yorokobu)", "기뻐하다"),
+    ("悲しむ (かなしむ, kanashimu)", "슬퍼하다"),
+    ("驚く (おどろく, odoroku)", "놀라다"),
+    ("安心する (あんしんする, anshin suru)", "안심하다"),
+    ("心配する (しんぱいする, shinpai suru)", "걱정하다"),
+    ("感謝する (かんしゃする, kansha suru)", "감사하다"),
+    ("謝る (あやまる, ayamaru)", "사과하다"),
+    ("認める (みとめる, mitomeru)", "인정하다"),
+    ("拒否する (きょひする, kyohi suru)", "거부하다"),
+    ("期待する (きたいする, kitai suru)", "기대하다"),
+    ("失望する (しつぼうする, shitsubou suru)", "실망하다"),
+    ("成功する (せいこうする, seikou suru)", "성공하다"),
+    ("失敗する (しっぱいする, shippai suru)", "실패하다"),
+    ("許す (ゆるす, yurusu)", "용서하다"),
+    ("祝う (いわう, iwau)", "축하하다"),
+    ("感動する (かんどうする, kandou suru)", "감동하다"),
+    ("驚く (おどろく, odoroku)", "놀라다"),
+    ("信じる (しんじる, shinjiru)", "믿다"),
+    ("疑う (うたがう, utagau)", "의심하다"),
+    ("愛する (あいする, ai suru)", "사랑하다"),
+    ("尊敬する (そんけいする, sonkei suru)", "존경하다"),
+    ("期待する (きたいする, kitai suru)", "기대하다"),
+    ("失望する (しつぼうする, shitsubou suru)", "실망하다"),
+    ("褒める (ほめる, homeru)", "칭찬하다"),
+    ("叱る (しかる, shikaru)", "꾸짖다")
+]
+
+# Path
